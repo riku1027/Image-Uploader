@@ -13,8 +13,3 @@ This application/site was created as a submission to a [DevChallenges](https://d
 - TypeScript
 - Firebase(Cloud Storage)
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
