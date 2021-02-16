@@ -1,17 +1,13 @@
 import React from "react";
 import "../assets/styles/upload.scss";
 import UploadImage from "../assets/images/upload.svg";
-import { useHistory } from "react-router-dom";
 
 type Props = {
   uploadImage: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 const Upload: React.FC<Props> = ({ uploadImage }) => {
-  const history = useHistory();
-
   const onClick = (event: React.ChangeEvent<HTMLInputElement>) => {
-    history.push("/Uploading");
     uploadImage(event);
   };
   return (

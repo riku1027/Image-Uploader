@@ -1,23 +1,46 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Upload, Uploading, Uploaded } from "./components/index";
 import "./assets/styles/style.scss";
 import { storage } from "./firebase/index";
 
 const App: React.FC = () => {
-  const [image, setImage] = useState(null);
+  type imageStateType = "Upload" | "Uploading" | "Uploaded";
+
+  const [imageState, setImageState] = useState<imageStateType>("Upload");
+  const [imageUri, setImageUri] = useState<string>();
 
   const uploadImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    setImageState("Uploading");
     const files = event.target.files;
     if (files) {
-      const image = files[0];
-      const storageRef = storage.ref();
-      const imagesRef = storageRef.child("images");
-      const targetRef = imagesRef.child(image.name);
-      console.log(process.env.REACT_APP_API_KEY);
-      await targetRef.put(image).then(function (snapshot) {
-        console.log("アップロード完了");
-      });
+      const uploadFile = files[0];
+      const targetRef = storage.ref().child(`images/${uploadFile.name}`);
+
+      const uploadTask: any = targetRef.put(uploadFile);
+
+      uploadTask.on(
+        "state_changed",
+        (snapshot: { bytesTransferred: number; totalBytes: number }) => {
+          // 進行中のsnapshotを得る
+          // アップロードの進行度を表示
+          const percent =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log(percent + "% done");
+          console.log(snapshot);
+        },
+        (error: any) => {
+          console.log("err", error);
+          alert(error);
+        },
+        () => {
+          uploadTask.snapshot.ref.getDownloadURL().then((downloadURL: any) => {
+            console.log("File available at", downloadURL);
+            setImageUri(downloadURL);
+            setImageState("Uploaded");
+            console.log(imageUri);
+          });
+        }
+      );
     }
   };
 
@@ -26,17 +49,16 @@ const App: React.FC = () => {
       <div className="container">
         <div className="wrap">
           <div className="inner">
-            <Router>
-              <Route exact path="/">
-                <Upload uploadImage={uploadImage} />
-              </Route>
-              <Route path="/Uploading">
-                <Uploading />
-              </Route>
-              <Route path="/Uploaded">
-                <Uploaded />
-              </Route>
-            </Router>
+            {(() => {
+              if (imageState == "Upload") {
+                return <Upload uploadImage={uploadImage} />;
+              } else if (imageState == "Uploading") {
+                return <Uploading />;
+              } else if (imageState == "Uploaded") {
+                return <Uploaded image={imageUri} />;
+                // propsとしてImageStateを渡す。
+              }
+            })()}
           </div>
         </div>
       </div>
