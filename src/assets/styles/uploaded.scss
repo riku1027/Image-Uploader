@@ -1,0 +1,56 @@
+.heading {
+  margin: 20 auto;
+  &__icon {
+    height: 35px;
+    width: 35px;
+  }
+  &__text {
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 27px;
+    text-align: center;
+    letter-spacing: -0.035em;
+    color: #4f4f4f;
+  }
+}
+
+.image {
+  margin: 0;
+  &__view {
+    max-width: 338px;
+    min-width: 200px;
+  }
+  &__url {
+    display: flex;
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1px 1px 1px 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background: #f6f8fb;
+    &__text {
+      width: 80%;
+      font-size: 14px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    &__button {
+      padding: 10px;
+      margin: auto;
+      font-style: Noto Sans;
+      font-size: 12px;
+      background: #2f80ed;
+      border-radius: 8px;
+      color: white;
+      text-align: center;
+      border: none;
+      hover: {
+        cursor: pointer;
+      }
+    }
+  }
+}
