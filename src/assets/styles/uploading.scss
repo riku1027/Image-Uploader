@@ -1,0 +1,35 @@
+.text {
+  margin: 0 0 30px;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 27px;
+  letter-spacing: -0.035em;
+  text-align: left;
+  color: #4f4f4f;
+}
+.progress {
+  display: block;
+  border-radius: 8px;
+  background: #f2f2f2;
+  height: 6px;
+  position: relative;
+  overflow: hidden;
+}
+.progress__indicator {
+  width: 30%;
+  position: absolute;
+  background: #2f80ed;
+  height: 100%;
+  top: 0;
+  animation: progress 1.5s infinite;
+}
+@keyframes progress {
+  from {
+    left: 0;
+  }
+  to {
+    left: 100%;
+  }
+}
